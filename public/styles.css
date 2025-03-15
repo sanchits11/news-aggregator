@@ -1,0 +1,40 @@
+.navbar{
+    background-color: rgb(111, 111, 111);
+    align-items: end;
+    justify-content: right;
+
+}
+
+.nav-flex{
+    display: flex;
+    border: 2px solid red;
+    margin: 10px;
+    justify-self: right;
+
+}
+.navbar a {
+    font-size: large;
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid white;
+
+}
+
+.login-form{
+    padding: 2%;
+    margin: 10%;
+    background-color: green;
+    display: flex;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-items: center;
+}
+
+.login-field{
+    color: white;
+    padding: 2%;
+    width: 100%;
+}

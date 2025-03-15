@@ -1,0 +1,14 @@
+<%- include('./partials/header.ejs') %>
+
+<div class="login-form">
+    <% if (locals.errorMessage) { %>
+        <div class="alert-message"><%= errorMessage %></div>
+    <% } %>
+    <form action ="/auth/signup" method="post">
+        <div class="login-field"><label class="login-label">Name</label> <input class="login-input" name="name"> </div>
+        <div class="login-field"><label class="login-label">Email ID</label> <input class="login-input" name="username"></div>
+        <div class="login-field"><label class="login-label">Password</label> <input class="login-input" name="password"></div>
+
+        <button type="submit"> Sign Up</button><br>
+    </form>
+</div>
