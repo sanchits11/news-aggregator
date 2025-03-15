@@ -1,13 +1,21 @@
 import express from "express" ; 
+
 import mongoose from "mongoose" ; 
 import User from "./models/Users.js";
+import NewsItem from "./models/NewsItem.js"
+
+import getProfile from "./routes/profile.js";
+import getExplore from "./routes/explore.js";
+import getFeed from "./routes/feed.js";
+import getStory from "./routes/story.js";
+import getHome from "./routes/home.js"
 
 
-const Router = express.Router();
+const AppRouter = express.Router();
 
 
 // custom middleware to redirect unauthenticated requests to auth routes 
-Router.use((req,res,next)=>{
+AppRouter.use((req,res,next)=>{
   if ( !req.isAuthenticated() ){
     res.redirect('/auth') ; 
   } 
@@ -15,16 +23,32 @@ Router.use((req,res,next)=>{
   //next();  calling next here leads to error If you call next() after sending a response, Express tries to continue the request-response cycle, leading to the error
 })
 
-
-// Create a new user
-Router.get('/users', async (req, res) => {
-  res.render('users.ejs')
+// n
+AppRouter.get('/home', async (req, res,next) => {
+  const result = await getHome(req) ; 
+  console.log(result) ; 
+  res.send(result) ; 
 });
 
-// Get all users
-Router.get('/home', async (req, res,next) => {
-  res.render('home.ejs') ; 
+// getting feed with top stories 
+AppRouter.get('/feed', async (req, res,next) => {
+  res.send(getFeed(req)) ; 
+}); 
+
+// getting news of a particular category
+AppRouter.get('/explore', async (req, res,next) => {
+  res.send(getExplore(req)) ; 
 });
 
-//module.exports = router;
-export default Router ; 
+// getting multiple reports from different sources for one news story. 
+AppRouter.get('/story', async (req, res,next) => {
+  res.send(getStory(req)) ; 
+});
+
+// user data, bookmarks, history maybe , etc. 
+AppRouter.get('/profile', async (req, res) => {
+  res.send(getProfile(req)) ; 
+});
+
+
+export default AppRouter ; 
