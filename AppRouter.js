@@ -25,9 +25,7 @@ AppRouter.use((req,res,next)=>{
 
 // n
 AppRouter.get('/home', async (req, res,next) => {
-  const result = await getHome(req) ; 
-  console.log(result) ; 
-  res.send(result) ; 
+  res.render('home.ejs') ; 
 });
 
 // getting feed with top stories 

@@ -12,8 +12,8 @@ const NewsAPIKey = process.env.NEWSAPI_KEY ;
 async function getHome(req){
     console.log(NewsAPIKey); 
     try {
-    const response = await axios.get(`https://newsapi.org/v2/everything?q=India&apiKey=${NewsAPIKey}`) ; 
-    return response.data ;
+    const response = await axios.get(`https://newsapi.org/v2/everything?apiKey=${NewsAPIKey}`) ; 
+    return response.data.articles ;
     } catch(error){
         console.error("error:",error) ; 
         throw error ; 

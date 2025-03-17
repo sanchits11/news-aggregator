@@ -2,14 +2,16 @@ import mongoose from "mongoose";
 
 
 const newsSchema = new mongoose.Schema({
-    name: { type: String, unique: true },
-    source : Object ,
+    title: { type: String, required: true }, 
+    source : String ,
     url : String , 
+    imgUrl : String , 
     author:String , 
     description : String , 
     content : String ,
     date : Date , 
     score : Number , 
+    tags : Array , 
 });
 
 

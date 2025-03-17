@@ -27,9 +27,9 @@ AuthRouter.get("/signup",(req,res) => {
 AuthRouter.post("/signup",async (req,res) => {
 
 
-    console.log(req.body) ; // the body of the request is empty even when i specify Body in Postman 
+    //console.log(req.body) ; // the body of the request is empty even when i specify Body in Postman 
     const dbresult = await User.findOne().where("email").equals(req.body.username) ; 
-    console.log(dbresult) ; 
+    //console.log(dbresult) ; 
     if( (dbresult)  ){ // 
         console.log("user exists");
         res.send("there is an account aleardy associated with this mail id. please try logging in "  );
@@ -103,7 +103,7 @@ passport.use(
         if (result){
             const user = result;
             const storedPassword = user.password ; 
-            console.log(user,storedPassword,password)
+          //  console.log(user,storedPassword,password)
             bcrypt.compare(password,storedPassword,(err,result) =>{
                 if (err) {
                     return cb(err) ; 
