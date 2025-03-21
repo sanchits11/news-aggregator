@@ -20,7 +20,6 @@ async function connectDB() {
 
 async function fetchDB(tags){
   const result = await NewsItem.find().where("tags").all(tags) ; 
-  console.log(result) ; 
   return result; 
   
 }

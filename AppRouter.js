@@ -25,6 +25,8 @@ AppRouter.use((req,res,next)=>{
 
 // n
 AppRouter.get('/home', async (req, res,next) => {
+
+  const topHeadlines = 
   res.render('home.ejs') ; 
 });
 
