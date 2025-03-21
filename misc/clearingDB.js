@@ -12,4 +12,4 @@ async function clearDatabase() {
     await mongoose.connection.close();
 }
 
-// clearDatabase().catch(console.error);
+clearDatabase().catch(console.error);

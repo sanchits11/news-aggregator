@@ -1,22 +1,20 @@
 import mongoose from "mongoose";
 import NewsItem from "./models/NewsItem.js";
+import SentimentAnalysis from "./models/sentimentAnalysis.js";
 import connectDB, { fetchDB } from "./db.js";
-
+import getSentiment from "./sentimentAnalyzer.js";
 import axios from "axios";
 import env from "dotenv" ; 
+
 env.config();
 const NewsAPIKey = process.env.NEWSAPI_KEY ; 
 connectDB() ; 
 
-async function getScore(data){
 
-//function to get bias score for article 
-    return 1.242 ; 
-}
-
-
-async function saveArticle(article,tags){
-    const score = await getScore(article.content) ; 
+async function saveArticle(article,category){
+    console.log(article.content) ; 
+    const sentiment = await getSentiment(article.content||"none") ; 
+    console.log("sentiment object returned :", sentiment) ; 
     const newArticle = new NewsItem({
         title: article.title || `Untitled-${Date.now()}`,
         source : article.source?.name || "Unknown Source",
@@ -26,17 +24,22 @@ async function saveArticle(article,tags){
         description : article.description , 
         content : article.content ,
         date : article.publishedAt , 
-        score : score  , 
-        tags : [tags] , 
-    }) ;
+        category : category , 
 
+    }) ;
     const res = await newArticle.save(); 
+    const newSentiment = new SentimentAnalysis({
+        news_id : res._id ,
+        sentiment_label : sentiment.label ,
+        sentiment_score : sentiment.score 
+    })
+    
     return newArticle ; 
 
 }
 
-async function getNews(tags){
-    const result = await fetchDB(tags) ; 
+async function getNews(category){
+    const result = await fetchDB(category) ; 
     console.log("\n\n\n DB : " ,result) ; 
     console.log(result.length) ; 
     if (result.length != 0){
@@ -44,33 +47,27 @@ async function getNews(tags){
         return result ;
     }
     else {
-        const APIResult = await getFromAPI(tags) ; 
+        const APIResult = await getFromAPI(category) ; 
         var response = []
-        APIResult.articles.forEach(news => {
-            var curr = saveArticle(news,tags) ;  
-            response.push(curr) ; 
-        });       
-        console.log(APIResult) ; 
+        response = await Promise.all(APIResult.articles.map(news => saveArticle(news, category)));  
+         // map() returns an array of promises.
+        // Promise.all() ensures all saveArticle calls complete before returning response.    
+        //console.log(APIResult) ; 
         console.log("\n\nAPI  HAS RETURNED DATA \n\n") ;
         return response ;
 
 
     }
-    // const apiRes = getFromAPI(tags) ; 
-    // console.log("\n\n\n API" , apiRes) ; 
-    // format tags if necessary and query the database 
-    // call fetchDB that gets all the articles that have all the tags given as parameter to it 
-    
-    // if not dbResult , getFromAPI , then saveArticle and send response 
+
 }
 
 
-async function getFromAPI(tags){
+async function getFromAPI(category){
     const params = {
         "apiKey" : NewsAPIKey , 
         "language":'en', 
     }
-    if (tags != "headline"){params["category"] = tags ; }
+    if (category != "headline"){params["category"] = category ; }
     console.log(params) ; 
                 try {
         const response = await axios.get(`https://newsapi.org/v2/top-headlines/`,{ params:params ,headers :{
@@ -86,7 +83,7 @@ async function getFromAPI(tags){
 }
 
 
-var res = getNews("global") ; 
+var res = getNews("sports") ; 
 console.log(res) ; 
 
 

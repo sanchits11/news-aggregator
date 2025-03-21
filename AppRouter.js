@@ -6,7 +6,6 @@ import NewsItem from "./models/NewsItem.js"
 
 import getProfile from "./routes/profile.js";
 import getExplore from "./routes/explore.js";
-import getFeed from "./routes/feed.js";
 import getStory from "./routes/story.js";
 import getHome from "./routes/home.js"
 
@@ -23,17 +22,12 @@ AppRouter.use((req,res,next)=>{
   //next();  calling next here leads to error If you call next() after sending a response, Express tries to continue the request-response cycle, leading to the error
 })
 
-// n
+// home page with top headlines 
 AppRouter.get('/home', async (req, res,next) => {
-
-  const topHeadlines = 
-  res.render('home.ejs') ; 
+  var response = await getHome() ; 
+  res.send(response) ; 
 });
 
-// getting feed with top stories 
-AppRouter.get('/feed', async (req, res,next) => {
-  res.send(getFeed(req)) ; 
-}); 
 
 // getting news of a particular category
 AppRouter.get('/explore', async (req, res,next) => {
