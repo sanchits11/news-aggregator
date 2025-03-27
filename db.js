@@ -18,14 +18,8 @@ async function connectDB() {
 
 // check whether data for current request is available in the mongo database
 
-async function fetchDB(category){
-  const result = (category != "headline") ? await NewsItem.find().where('category').equals(category) :  await NewsItem.find() ; 
-  return result; 
-  
-}
 
 
 // module.exports = connectDB ;
 
 export default connectDB  ;
-export {fetchDB}; 

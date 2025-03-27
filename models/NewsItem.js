@@ -10,7 +10,7 @@ const newsSchema = new mongoose.Schema({
     content: String,
     date: Date,
     sentiment :{ type: mongoose.Schema.Types.ObjectId, ref: 'Sentiment'}  , 
-    category: String  // Added reference
+    category: String  
 });
 
 const NewsItem = mongoose.model('NewsItem', newsSchema);

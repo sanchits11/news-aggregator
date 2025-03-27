@@ -5,16 +5,12 @@ import Router from './AppRouter.js'
 import AuthRouter from "./AuthRouter.js";
 import session from "express-session" ;
 import passport from "passport";
-import User from "./models/Users.js";
 
 import { Strategy } from "passport-local";
-
 
 // allows us to configure the environment / use the environment variables in this process 
 import env from "dotenv" ; 
 env.config();
-
-
 
 const app = express();
 app.use(bodyParser.urlencoded({extended:true})) ; 
@@ -42,10 +38,6 @@ connectDB();
 // these lines for passport must follow above init for session and not before the above code 
 app.use(passport.initialize());
 app.use(passport.session()) ; 
-
-
-
-
 
 
 // passport init or some other code that I don't want to change now 
