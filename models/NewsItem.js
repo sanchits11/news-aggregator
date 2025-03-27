@@ -12,6 +12,7 @@ const newsSchema = new mongoose.Schema({
     sentiment :{ type: mongoose.Schema.Types.ObjectId, ref: 'Sentiment'}  , 
     category: String  
 });
+newsSchema.index({ content: "text" });
 
 const NewsItem = mongoose.model('NewsItem', newsSchema);
 export default NewsItem;
