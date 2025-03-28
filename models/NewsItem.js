@@ -9,7 +9,7 @@ const newsSchema = new mongoose.Schema({
     description: String,
     content: String,
     date: Date,
-    sentiment :{ type: mongoose.Schema.Types.ObjectId, ref: 'Sentiment'}  , 
+    sentiment :{ type: mongoose.Schema.Types.ObjectId, ref: 'SentimentAnalysis'}  , 
     category: String  
 });
 newsSchema.index({ content: "text" });
