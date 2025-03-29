@@ -11,7 +11,7 @@ env.config();
 const NewsAPIKey = process.env.NEWSAPI_KEY ; 
 connectDB() ; 
 
-const THRESH = 0.75
+const THRESH = 0.65
 // write a function getContext that takes the article and uses it's description to output a list of phrases/ keywords 
 
 async function getSimilarity(string1, string2){
@@ -149,7 +149,7 @@ const article =     {
     date: '2025-03-25T22:19:49.000Z',
     category: 'business',
   }
-var returnValue = await buildStory(article) ;
+var returnValue = await getStory(article) ;
 console.log("\n\n\n ",returnValue, "\n\n\n") ; 
 export {getContext,getStory } ; 
 
